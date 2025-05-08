@@ -7,13 +7,15 @@ library(ggsci)
 library(data.table)
 library(stringr)
 
-load("./Data/4.PloatData.RData")
+load("./data/4.PloatData.RData")
 
 ##### IS --------
 IS.shared.filter.df$ProcessedHabitat <- as.character(IS.shared.filter.df$ProcessedHabitat)
 
-across.df <- IS.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
+IS.shared.filter.df <- IS.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
   group_by(ProcessedHabitat) %>% summarise(Count = n())
+
+across.df <- IS.shared.filter.df
 
 across.df <- across.df %>% mutate(Habitat1 = sapply(strsplit(across.df$ProcessedHabitat, ".", fixed = T), "[[", 1),
                                   Habitat2 = sapply(strsplit(across.df$ProcessedHabitat, ".", fixed = T), "[[", 2)) %>%
@@ -43,11 +45,13 @@ highchart( ) %>%
   hc_add_theme(hc_theme_gridlight())  #
 
 ##### Phage -------
-across.df <- Phage.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
+Phage.shared.filter.df <- Phage.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
   group_by(ProcessedHabitat) %>% summarise(Count = n()) %>%
   mutate(Habitat1 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 1),
          Habitat2 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 2)) %>%
   select(Habitat1, Habitat2, Count)
+
+across.df <- Phage.shared.filter.df
 
 colnames(across.df) <- c("from" , "to", "weight")
 across.df$to <- paste0(across.df$to, ".","1")
@@ -72,11 +76,13 @@ highchart( ) %>%
 
 
 ##### Plasmid ---------
-across.df <- Plasmid.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
+Plasmid.shared.filter.df <- Plasmid.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
   group_by(ProcessedHabitat) %>% summarise(Count = n()) %>%
   mutate(Habitat1 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 1),
          Habitat2 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 2)) %>%
   select(Habitat1, Habitat2, Count)
+
+across.df <- Plasmid.shared.filter.df
 
 colnames(across.df) <- c("from" , "to", "weight")
 across.df$to <- paste0(across.df$to, ".","1")
@@ -102,11 +108,13 @@ highchart( ) %>%
 
 ##### ICE ---------
 
-across.df <- ICE.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
+ICE.shared.filter.df <- ICE.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
   group_by(ProcessedHabitat) %>% summarise(Count = n()) %>%
   mutate(Habitat1 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 1),
          Habitat2 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 2)) %>%
   select(Habitat1, Habitat2, Count)
+
+across.df <- ICE.shared.filter.df
 
 colnames(across.df) <- c("from" , "to", "weight")
 across.df$to <- paste0(across.df$to, ".","1")
@@ -132,11 +140,13 @@ highchart( ) %>%
 
 
 ##### Tn ----------
-across.df <- Tn.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
+Tn.shared.filter.df <- Tn.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
   group_by(ProcessedHabitat) %>% summarise(Count = n()) %>%
   mutate(Habitat1 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 1),
          Habitat2 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 2)) %>%
   select(Habitat1, Habitat2, Count)
+
+across.df <- Tn.shared.filter.df
 
 colnames(across.df) <- c("from" , "to", "weight")
 across.df$to <- paste0(across.df$to, ".","1")
@@ -161,11 +171,13 @@ highchart( ) %>%
   hc_add_theme(hc_theme_gridlight())  
 
 ##### Integron ---------
-across.df <- Integron.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
+Integron.shared.filter.df <- Integron.shared.filter.df %>% filter(Shared.type == "crossHabitat") %>% 
   group_by(ProcessedHabitat) %>% summarise(Count = n()) %>%
   mutate(Habitat1 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 1),
          Habitat2 = sapply(strsplit(ProcessedHabitat, ".", fixed = T), "[[", 2)) %>%
   select(Habitat1, Habitat2, Count)
+
+across.df <- Integron.shared.filter.df
 
 colnames(across.df) <- c("from" , "to", "weight")
 across.df$to <- paste0(across.df$to, ".","1")
